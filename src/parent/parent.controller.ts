@@ -1,7 +1,16 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ParentService } from './parent.service';
 
-@Controller('parent')
+@Controller('parents')
 export class ParentController {
   constructor(private readonly parentService: ParentService) {}
+
+  @Get()
+  async getAllParents(
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query() query: Record<string, string>,
+  ) {
+    return this.parentService.findAll(+page, +limit, query);
+  }
 }
