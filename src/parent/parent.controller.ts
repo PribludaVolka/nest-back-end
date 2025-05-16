@@ -9,8 +9,8 @@ export class ParentController {
   async getAllParents(
     @Query('page') page = '1',
     @Query('limit') limit = '10',
-    @Query() query: Record<string, string>,
+    @Query('search') search: string,
   ) {
-    return this.parentService.findAll(+page, +limit, query);
+    return this.parentService.findAll(+page, +limit, search);
   }
 }

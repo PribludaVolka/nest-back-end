@@ -6,32 +6,31 @@ import { Prisma } from '@prisma/client';
 export class ParentService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(page: number, limit: number, queryParams?: Record<string, string>) {
+  async findAll(page: number, limit: number, search?: string) {
     const skip = (page - 1) * limit;
-    const query: Prisma.ParentWhereInput = {};
+    const where: any = {};
 
-    if (queryParams) {
-      for (const [key, value] of Object.entries(queryParams)) {
-        if (value !== undefined) {
-          switch (key) {
-            case 'search':
-              query.name = { contains: value, mode: 'insensitive' };
-              break;
-          }
-        }
-      }
+    if (search) {
+      where.OR = [
+        {
+          name: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      ];
     }
 
     const [parents, count] = await this.prisma.$transaction([
       this.prisma.parent.findMany({
-        where: query,
+        where,
         include: {
           students: true,
         },
         skip,
         take: limit,
       }),
-      this.prisma.parent.count({ where: query }),
+      this.prisma.parent.count({ where }),
     ]);
 
     return { parents, count };

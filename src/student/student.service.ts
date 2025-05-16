@@ -6,31 +6,25 @@ import { Prisma } from '@prisma/client';
 export class StudentService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(page: number, limit: number, queryParams?: Record<string, string>) {
+  async findAll(page: number, limit: number, search?: string) {
     const skip = (page - 1) * limit;
-    const query: Prisma.StudentWhereInput = {};
 
-    if (queryParams) {
-      for (const [key, value] of Object.entries(queryParams)) {
-        if (value !== undefined) {
-          switch (key) {
-            case 'classId':
-              query.classId = parseInt(value);
-              break;
-            case 'search':
-              query.name = {
-                contains: value,
-                mode: 'insensitive',
-              };
-              break;
-          }
-        }
-      }
+    const where: any = {};
+
+    if (search) {
+      where.OR = [
+        {
+          name: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      ];
     }
 
     const [students, count] = await this.prisma.$transaction([
       this.prisma.student.findMany({
-        where: query,
+        where,
         include: {
           class: true,
           attendances: true,
@@ -39,7 +33,7 @@ export class StudentService {
         skip,
         take: limit,
       }),
-      this.prisma.student.count({ where: query }),
+      this.prisma.student.count({ where }),
     ]);
 
     return { students, count };
