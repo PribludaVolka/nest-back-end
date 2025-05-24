@@ -1,12 +1,13 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { SubjectService } from './subject.service';
 
+
 @Controller('subject')
 export class SubjectController {
   constructor(private readonly subjectService: SubjectService) {}
 
   @Get()
-  async getAllParents(
+  async getAllSubjects(
     @Query('page') page = '1',
     @Query('limit') limit = '10',
     @Query('search') search: string,

@@ -8,7 +8,7 @@ export class TeacherController {
   @Get()
   async getAllTeachers(
     @Query('page') page = '1',
-    @Query('limit') limit = '5',
+    @Query('limit') limit = '10',
     @Query('search') search: string,
   ) {
     return this.teacherService.findAll(+page, +limit, search);

@@ -10,8 +10,9 @@ import { GradeModule } from './grade/grade.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { ClassModule } from './class/class.module';
 import { SubjectModule } from './subject/subject.module';
+import { ResultModule } from './result/result.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, StudentModule, UserModule, TeacherModule, ParentModule, LessonModule, GradeModule, ScheduleModule, ClassModule, SubjectModule],
+  imports: [PrismaModule, AuthModule, StudentModule, UserModule, TeacherModule, ParentModule, LessonModule, GradeModule, ScheduleModule, ClassModule, SubjectModule, ResultModule],
 })
 export class AppModule {}
