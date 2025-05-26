@@ -5,39 +5,46 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class ClassService {
   constructor(private readonly prisma: PrismaService) {}
 
- async findAll(page: number, limit: number, search?: string) {
-  const skip = (page - 1) * limit;
+  async findAll(page: number, limit: number, search?: string) {
+    const skip = (page - 1) * limit;
 
-  const where: any = {};
+    const where: any = {};
 
-  if (search) {
-    where.OR = [
-      {
-        name: {
-          contains: search,
-          mode: 'insensitive',
+    if (search) {
+      where.OR = [
+        {
+          name: {
+            contains: search,
+            mode: 'insensitive',
+          },
         },
-      },
-    ];
+      ];
+    }
+
+    const [classes, count] = await this.prisma.$transaction([
+      this.prisma.class.findMany({
+        where,
+        include: {
+          announcements: true,
+          events: true,
+          lessons: true,
+          students: true,
+          supervisor: true,
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.class.count({ where }),
+    ]);
+
+    return { classes, count };
   }
 
-  const [classes, count] = await this.prisma.$transaction([
-    this.prisma.class.findMany({
-      where,
-      include: {
-        announcements: true,
-        events: true,
-        lessons: true,
-        students: true,
-        supervisor: true,
-      },
-      skip,
-      take: limit,
-    }),
-    this.prisma.class.count({ where }),
-  ]);
+  async getAll() {
+    const [classes] = await this.prisma.$transaction([
+      this.prisma.class.findMany(),
+    ]);
 
-  return { classes, count };
-}
-
+    return classes;
+  }
 }

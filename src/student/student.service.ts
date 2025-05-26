@@ -38,4 +38,12 @@ export class StudentService {
 
     return { students, count };
   }
+
+  async getAll() {
+    const [students] = await this.prisma.$transaction([
+      this.prisma.student.findMany(),
+    ]);
+
+    return students;
+  }
 }

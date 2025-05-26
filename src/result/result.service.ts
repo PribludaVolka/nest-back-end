@@ -73,4 +73,12 @@ export class ResultService {
         });
         return { results, count };
     }
+
+    async getAll() {
+        const [results] = await this.prisma.$transaction([
+            this.prisma.result.findMany(),
+        ]);
+
+        return results;
+    }
 }

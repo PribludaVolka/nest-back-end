@@ -13,4 +13,9 @@ export class StudentController {
   ) {
     return this.studentService.findAll(+page, +limit, search);
   }
+
+  @Get('/all')
+  async getAll() {
+    return this.studentService.getAll();
+  }
 }

@@ -14,4 +14,9 @@ export class ExamController {
   ) {
     return this.examService.findAll(+page, +limit, search);
   }
+
+  @Get('/all')
+  async getAll() {
+    return this.examService.getAll();
+  }
 }

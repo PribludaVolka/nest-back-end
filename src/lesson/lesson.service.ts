@@ -39,4 +39,12 @@ export class LessonService {
 
         return { lessons, count };
     }
+
+    async getAll() {
+        const [lessons] = await this.prisma.$transaction([
+            this.prisma.lesson.findMany(),
+        ]);
+
+        return lessons;
+    }
 }

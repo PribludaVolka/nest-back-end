@@ -13,4 +13,9 @@ export class TeacherController {
   ) {
     return this.teacherService.findAll(+page, +limit, search);
   }
+
+  @Get('/all')
+  async getAll() {
+    return this.teacherService.getAll();
+  }
 }

@@ -14,4 +14,9 @@ export class LessonController {
   ) {
     return this.lessonService.findAll(+page, +limit, search);
   }
+
+  @Get('/all')
+  async getAll() {
+    return this.lessonService.getAll();
+  }
 }

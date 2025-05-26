@@ -35,4 +35,12 @@ export class SubjectService {
 
         return { subjects, count };
     }
+
+    async getAll() {
+        const [subjects] = await this.prisma.$transaction([
+            this.prisma.subject.findMany(),
+        ]);
+
+        return subjects;
+    }
 }

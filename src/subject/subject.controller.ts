@@ -14,4 +14,9 @@ export class SubjectController {
   ) {
     return this.subjectService.findAll(+page, +limit, search);
   }
+
+  @Get('/all')
+  async getAll() {
+    return this.subjectService.getAll();
+  }
 }

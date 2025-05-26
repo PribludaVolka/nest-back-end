@@ -42,4 +42,12 @@ export class ExamService {
 
     return { exams, count };
   }
+
+    async getAll() {
+      const [exams] = await this.prisma.$transaction([
+        this.prisma.exam.findMany(),
+      ]);
+
+      return exams;
+    }
 }

@@ -35,4 +35,12 @@ export class ParentService {
 
     return { parents, count };
   }
+
+  async getAll() {
+    const [parents] = await this.prisma.$transaction([
+      this.prisma.parent.findMany(),
+    ]);
+
+    return parents;
+  }
 }

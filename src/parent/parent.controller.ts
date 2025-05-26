@@ -13,4 +13,9 @@ export class ParentController {
   ) {
     return this.parentService.findAll(+page, +limit, search);
   }
+
+  @Get('/all')
+  async getAll() {
+    return this.parentService.getAll();
+  }
 }
