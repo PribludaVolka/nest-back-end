@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateClassDto } from './dto/class-create.dto';
+import { UpdateClassDto } from './dto/class-update.dto';
 
 @Injectable()
 export class ClassService {
@@ -47,4 +49,31 @@ export class ClassService {
 
     return classes;
   }
+
+  public async create(dto: CreateClassDto) {
+          console.log(dto);
+          const subject = await this.prisma.subject.create({
+              data: {
+                  ...dto,
+              },
+          });
+  
+          return subject;
+    }
+  
+      public async update(dto: UpdateClassDto) {
+          return this.prisma.subject.update({
+              where: { id: dto.id },
+              data: {
+              name: dto.name,
+              },
+          });
+      }
+  
+      public async delete(id: number) {
+          console.log(id);
+          return this.prisma.subject.delete({
+              where: { id },
+          });
+      }
 }
