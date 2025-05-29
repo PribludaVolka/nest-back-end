@@ -18,4 +18,9 @@ export class TeacherController {
   async getAll() {
     return this.teacherService.getAll();
   }
+
+  @Get('/select')
+  async getSelectTeacher() {
+    return this.teacherService.getSelectTeacher();
+  }
 }

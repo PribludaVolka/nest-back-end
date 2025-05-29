@@ -44,4 +44,15 @@ export class TeacherService {
 
     return teachers;
   }
+
+  async getSelectTeacher() {
+    const [teachers] = await this.prisma.$transaction([
+      this.prisma.teacher.findMany({
+        select: { id: true, name: true, surname: true },
+      }),
+    ]);
+
+
+    return teachers;
+  }
 }

@@ -58,16 +58,31 @@ export class SubjectService {
   }
 
     public async update(dto: UpdateSubjectDto) {
+        const teachers = await this.prisma.teacher.findMany({
+            where: {
+                id: {
+                    in: dto.teachers,
+                },
+            },
+            select: { id: true },
+        });
+
+        if (teachers.length === 0) {
+            throw new Error('Учителя не найдены');
+        }
+
         return this.prisma.subject.update({
             where: { id: dto.id },
             data: {
-            name: dto.name,
+                name: dto.name,
+                teachers: {
+                    connect: teachers.map((teacher) => ({ id: teacher.id })),
+                },
             },
         });
     }
 
     public async delete(id: number) {
-        console.log(id);
         return this.prisma.subject.delete({
             where: { id },
         });
