@@ -1,5 +1,7 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common';
 import { SubjectService } from './subject.service';
+import { CreateSubjectDto } from './dto/subject-create.dto';
+import { UpdateSubjectDto } from './dto/subject-update.dto';
 
 
 @Controller('subject')
@@ -18,5 +20,22 @@ export class SubjectController {
   @Get('/all')
   async getAll() {
     return this.subjectService.getAll();
+  }
+
+  @Post()
+  async create(
+    @Body() dto: CreateSubjectDto
+  ) {
+    return this.subjectService.create(dto);
+  }
+
+  @Put()
+  async update(@Body() dto: UpdateSubjectDto) {
+    return this.subjectService.update(dto);
+  }
+
+  @Delete()
+  async delete(@Body('id') id: number) {
+    return this.subjectService.delete(id);
   }
 }
