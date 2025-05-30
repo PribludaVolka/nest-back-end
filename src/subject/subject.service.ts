@@ -47,10 +47,21 @@ export class SubjectService {
     }
 
     public async create(dto: CreateSubjectDto) {
-        console.log(dto);
+         const teachers = await this.prisma.teacher.findMany({
+                where: {
+                    id: {
+                        in: dto.teachers, 
+                    },
+                },
+                select: { id: true },
+        });
+
         const subject = await this.prisma.subject.create({
             data: {
-                ...dto,
+                name: dto.name,
+                teachers: {
+                    connect: teachers.map((teacher) => ({ id: teacher.id })),
+                },
             },
         });
 
