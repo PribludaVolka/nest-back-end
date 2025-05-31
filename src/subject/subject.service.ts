@@ -47,7 +47,7 @@ export class SubjectService {
     }
 
     public async create(dto: CreateSubjectDto) {
-         const teachers = await this.prisma.teacher.findMany({
+        const teachers = await this.prisma.teacher.findMany({
                 where: {
                     id: {
                         in: dto.teachers, 

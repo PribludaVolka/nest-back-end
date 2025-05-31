@@ -51,29 +51,30 @@ export class ClassService {
   }
 
   public async create(dto: CreateClassDto) {
-          console.log(dto);
-          const subject = await this.prisma.subject.create({
-              data: {
-                  ...dto,
-              },
-          });
+    const classes = await this.prisma.class.create({
+      data: {
+        ...dto
+      },
+    });
   
-          return subject;
-    }
+    return classes;
+  }
   
-      public async update(dto: UpdateClassDto) {
-          return this.prisma.subject.update({
-              where: { id: dto.id },
-              data: {
-              name: dto.name,
-              },
-          });
-      }
+  public async update(dto: UpdateClassDto) {
+    return this.prisma.class.update({
+      where: { id: dto.id },
+      data: {
+        name: dto.name,
+        capacity: dto.capacity,
+        supervisorId: dto.supervisorId,
+        gradeId: dto.gradeId
+      },
+    });
+  }
   
-      public async delete(id: number) {
-          console.log(id);
-          return this.prisma.subject.delete({
-              where: { id },
-          });
-      }
+  public async delete(id: number) {
+    return this.prisma.class.delete({
+      where: { id },
+    });
+  }
 }
