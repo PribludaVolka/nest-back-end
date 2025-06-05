@@ -13,6 +13,7 @@ import { SubjectModule } from './subject/subject.module';
 import { ResultModule } from './result/result.module';
 import { EventModule } from './event/event.module';
 import { AnnounmentModule } from './announcments/announcment.module';
+import { FileModule } from './file/file.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { AnnounmentModule } from './announcments/announcment.module';
     SubjectModule, 
     ResultModule,
     EventModule,
-    AnnounmentModule
+    AnnounmentModule,
+    FileModule
   ],
 })
 export class AppModule {}

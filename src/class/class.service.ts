@@ -77,4 +77,15 @@ export class ClassService {
       where: { id },
     });
   }
+
+  async getSelectClasses() {
+    const [classes] = await this.prisma.$transaction([
+      this.prisma.class.findMany({
+        include: { _count: { select: { students: true } } },
+      })
+    ]);
+
+
+    return classes;
+  }
 }

@@ -98,4 +98,15 @@ export class SubjectService {
             where: { id },
         });
     }
+
+    async getSelectSubject() {
+        const [subjects] = await this.prisma.$transaction([
+            this.prisma.subject.findMany({
+                select: { id: true, name: true },
+            }),
+        ]);
+
+
+        return subjects;
+    }
 }

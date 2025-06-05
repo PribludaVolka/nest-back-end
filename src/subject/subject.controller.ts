@@ -38,4 +38,9 @@ export class SubjectController {
   async delete(@Body('id') id: number) {
     return this.subjectService.delete(id);
   }
+
+  @Get('/select')
+  async getSelectSubject() {
+    return this.subjectService.getSelectSubject();
+  }
 }

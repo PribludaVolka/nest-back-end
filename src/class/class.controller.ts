@@ -37,6 +37,12 @@ export class ClassController {
     async delete(@Body('id') id: number) {
       return this.classService.delete(id);
     }
+
+
+    @Get('/select')
+    async getSelectClass() {
+      return this.classService.getSelectClasses();
+    }
 }
 
 
